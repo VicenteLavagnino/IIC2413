@@ -1,0 +1,146 @@
+/* Estilo General */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #131e21;
+    /* Fondo oscuro similar al de Amazon Prime */
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo del Título */
+.title {
+    /* Color azul característico de Amazon Prime */
+    text-align: center;
+    padding: 20px 0;
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #FF9900;
+    /* Línea naranja debajo del título */
+}
+
+/* Estilo de los Botones */
+.button {
+    background-color: #FF9900;
+    /* Color naranja de Amazon Prime */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.button:hover {
+    background-color: #E68A00;
+    /* Un tono más oscuro al pasar el cursor */
+}
+
+/* Estilo del Footer */
+footer {
+    background-color: #131A22;
+    /* Color oscuro para el pie de página */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.main {
+    padding: 3%;
+}
+
+.container {
+    text-align: center;
+    padding: 2%;
+}
+
+a {
+    color: rgb(29, 27, 27);
+}
+
+footer {
+    text-align: center;
+    padding: 4% 0%;
+    font-size: small;
+}
+
+.btn {
+    color: white;
+    background-color: black;
+    font-size: 17px;
+    line-height: 16px;
+    padding: 6px;
+    border-radius: 10px;
+    font-family: san-serif;
+    font-weight: bold;
+    border: 3px solid rgb(255 255 255);
+}
+
+.btn:hover {
+    background: lightblue;
+}
+
+.btn:active {
+    background: rgb(82, 190, 209);
+}
+
+.form-element {
+    margin: 2%;
+}
+
+.form-element input,
+select {
+    border: 0;
+    box-shadow: 0 0 15px 4px rgb(0 0 0 / 6%);
+    padding: 10px;
+    border-radius: 10px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    min-width: 400px;
+}
+
+.table thead tr {
+    background-color: lightblue;
+    color: #000;
+    text-align: left;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.table tbody tr:last-of-type {
+    border-bottom: 2px solid rgb(82, 166, 181);
+}
+
+.title-image {
+    text-align: center;
+    /* Centrar la imagen */
+    padding: 10px 0;
+    /* Espaciado */
+}
+
+.title-image img {
+    max-width: 100%;
+    /* Asegura que la imagen no sea más ancha que su contenedor */
+    height: auto;
+    /* Mantiene la relación de aspecto de la imagen */
+}

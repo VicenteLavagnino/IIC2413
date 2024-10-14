@@ -1,0 +1,112 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage,graphicx,amssymb,amsmath,algorithmic}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{listings}
+\pgfplotsset{compat = newest}
+
+\begin{document}
+\thispagestyle{empty}
+\noindent Pontificia Universidad Católica de Chile\\
+\noindent Departamento de Ciencia de la Computación\\
+\noindent IIC2413 - Bases de Datos\\
+\begin{center}
+{\Huge\bf Entrega 2}\\
+\vspace{1em}
+\footnotesize{Vicente Lavagnino e Ignacio Laval}\\
+\vspace{1em}
+\rule{\textwidth}{0.1mm}
+\end{center}
+\thispagestyle{plain}
+
+\section{Tablas presentes en la base de datos}
+
+\begin{itemize}
+    \item videojuegos(\underline{id}, titulo, clasificacion, fecha\_lanzamiento, puntuacion)
+
+\item generos(\underline{id}, nombre)
+
+\item subgeneros(\underline{id}, nombre)
+
+\item proveedores(\underline{id}, nombre, plataforma)
+
+\item usuarios(\underline{id}, nombre, email, contrasena, username)
+
+\item suscripciones(\underline{id}, \underline{id\_usuario}, \underline{id\_videojuego}, estado, mensualidad)
+
+\item resenas(\underline{id\_usuario}, \underline{id\_videojuego}, titulo, texto, veredicto)
+
+\item compras\_videojuegos(\underline{id\_videojuego}, \underline{id\_usuario}, \underline{id\_proveedor}, preorden, monto)
+
+\item mercado\_videojuegos(\underline{id\_proveedor}, \underline{id\_videojuego}, precio)
+
+\item genero\_asignado(\underline{id\_videojuego}, \underline{id\_genero})
+
+\item relacion\_subgenero(\underline{id\_genero}, \underline{id\_subgenero})
+
+\item registro\_horas(\underline{id\_usuario}, \underline{id\_videojuego}, cantidad\_horas)
+
+\item pago\_suscripciones(\underline{id}, \underline{id\_suscripcion}, monto)
+
+\end{itemize}
+
+\section{Modelos}
+
+Adjuntos al final del PDF se encuentran anexados ambos modelos.
+
+\section{Justificación del Modelo en BCNF}
+
+Para asegurar que un modelo de base de datos esté en BCNF, es necesario que todas las dependencias funcionales de la relación cumplan con la condición de que el determinante sea una PK (Primary Key). A continuación, se justifica:
+
+\begin{enumerate}
+    \item \textbf{videojuegos:} La dependencia \( \text{id} \rightarrow \text{titulo, clasificacion, fecha lanzamiento, puntuacion} \) indica que el atributo \text{id} actúa como una PK. Por lo tanto, esta tabla satisface BCNF.
+    
+    \item \textbf{generos:} La dependencia \( \text{id} \rightarrow \text{nombre} \) indica que el atributo \text{id} es una PK. Esta tabla satisface BCNF.
+    
+    \item \textbf{subgeneros:} Similarmente, la dependencia \( \text{id} \rightarrow \text{nombre} \) señala que el atributo \text{id} es una PK. Esta tabla satisface BCNF.
+    
+    \item \textbf{proveedores:} La dependencia \( \text{id} \rightarrow \text{nombre, plataforma} \) indica que el atributo \text{id} es una PK. Esta tabla satisface BCNF.
+    
+    \item \textbf{usuarios:} Dada la dependencia \( \text{id} \rightarrow \text{nombre, email, contrasena, username} \), el atributo \text{id} actúa como una PK. Por ende, esta tabla satisface BCNF.
+    
+    \item \textbf{suscripciones:} La dependencia \( \text{id} \rightarrow \text{id usuario, id videojuego, estado, mensualidad} \) indica que el atributo \text{id} es una PK. Esta tabla satisface BCNF.
+    
+    \item \textbf{resenas:} La combinación de \text{id usuario} y \text{id videojuego} actúa como PK, determinando los atributos \text{titulo, texto, veredicto}. Esta tabla satisface BCNF.
+
+    \item \textbf{compras videojuegos:} Si consideramos la combinación de \text{id videojuego} y \text{id usuario} como una PK, entonces esta tabla satisface BCNF.
+    
+    \item \textbf{mercado videojuegos:} La combinación de \text{id proveedor} y \text{id videojuego} determina el precio, actuando como superclave. Esta tabla satisface BCNF.
+    
+    \item \textbf{genero asignado} y \textbf{relacion subgenero:} Dado que estas tablas solo tienen relaciones entre dos atributos, satisface BCNF.
+    
+    \item \textbf{registro horas:} La combinación de \text{id usuario} y \text{id videojuego} determina la \text{cantidad horas}, actuando así como PK. Esta tabla satisface BCNF.
+    
+    \item \textbf{pago suscripciones:} La dependencia \( \text{id} \rightarrow \text{id suscripcion, monto} \) indica que el atributo \text{id} es una PK. Esta tabla satisface BCNF.
+\end{enumerate}
+
+Dado el análisis anterior y basándonos en la representación de los modelos se puede concluir que todas las tablas del modelo propuesto están en BCNF.
+
+\newpage
+
+\section{Consultas en la base de datos}
+
+\begin{enumerate}
+    \item SELECT videojuegos.titulo AS Titulo, proveedores.nombre AS Proveedor FROM videojuegos JOIN mercado\_videojuegos ON videojuegos.id = mercado\_videojuegos.id\_videojuego JOIN proveedores ON proveedores.id = mercado\_videojuegos.id\_proveedor;
+
+    \item SELECT videojuegos.titulo AS Titulo FROM videojuegos JOIN resenas ON videojuegos.id = resenas.id\_videojuego WHERE resenas.veredicto = TRUE GROUP BY videojuegos.titulo HAVING COUNT(resenas.veredicto) $>=$ \$minimo;
+
+    \item SELECT videojuegos.titulo AS Titulo, proveedores.nombre AS Proveedor FROM videojuegos JOIN mercado\_videojuegos ON videojuegos.id = mercado\_videojuegos.id\_videojuego JOIN proveedores ON proveedores.id = mercado\_videojuegos.id\_proveedor WHERE videojuegos.titulo ILIKE '\%' || '\$juego' || '\%';
+
+    \item SELECT videojuegos.titulo AS Titulo FROM videojuegos JOIN genero\_asignado ON videojuegos.id = genero\_asignado.id\_videojuego JOIN generos ON genero\_asignado.id\_genero = generos.id WHERE generos.nombres = '\$genero' OR genero\_asignado.id\_genero IN (SELECT id\_subgenero FROM relacion\_subgenero JOIN generos ON relacion\_subgenero.id\_genero = generos.id WHERE generos.nombres = '\$genero');
+    
+    \item SELECT videojuegos.titulo AS Titulo, proveedores.nombre AS Proveedor FROM usuarios JOIN compras\_videojuegos ON usuarios.id = compras\_videojuegos.id\_usuario JOIN videojuegos ON compras\_videojuegos.id\_videojuego = videojuegos.id JOIN proveedores ON compras\_videojuegos.id\_proveedor = proveedores.id WHERE usuarios.username ILIKE '\%' || \$usuario || '\%';
+    
+    \item SELECT proveedores.nombre AS Proveedor FROM usuarios JOIN compras\_videojuegos ON usuarios.id = compras\_videojuegos.id\_usuario JOIN proveedores ON \\compras\_videojuegos.id\_proveedor = proveedores.id WHERE usuarios.username ILIKE '\%' || \$usuario || '\%' AND compras\_videojuegos.preorden = TRUE GROUP BY proveedores.nombre HAVING COUNT(compras\_videojuegos.id\_videojuego) $>$ 1;
+    
+    \item SELECT usuarios.nombre, SUM(pago\_suscripciones.monto) AS Gasto\_total FROM usuarios JOIN suscripciones ON usuarios.id = suscripciones.id\_usuario JOIN pago\_suscripciones ON suscripciones.id = pago\_suscripciones.id\_suscripcion GROUP BY usuarios.nombre;
+
+\end{enumerate}
+
+\end{document}

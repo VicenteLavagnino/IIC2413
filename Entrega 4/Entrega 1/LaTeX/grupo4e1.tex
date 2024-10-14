@@ -1,0 +1,204 @@
+\documentclass[12pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{fullpage,graphicx,amssymb,amsmath,algorithmic}
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\pgfplotsset{compat = newest}
+
+\begin{document}
+\thispagestyle{empty}
+\noindent Pontificia Universidad Católica de Chile\\
+\noindent Departamento de Ciencia de la Computación\\
+\noindent IIC2413 - Bases de Datos\\
+\begin{center}
+{\Huge\bf Entrega 1}\\
+\vspace{1em}
+\footnotesize{Vicente Lavagnino e Ignacio Laval}\\
+\vspace{1em}
+\rule{\textwidth}{0.1mm}
+\end{center}
+\thispagestyle{plain}
+
+\section{Tablas presentes en la base de datos}
+
+\noindent Videojuegos(\underline{id}, titulo, clasificacion, fecha\_lanzamiento, precio, puntuacion)
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|l|l|}
+    \hline
+    \underline{id} & Titulo & Clasificacion & Fecha de Lanzamiento & Precio & Puntuacion \\ \hline
+       &        &           &                 &        &           \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent Generos(\underline{id}, nombre)
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    \underline{id} & Nombre \\ \hline
+       &        \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent Subgeneros(\underline{id}, nombre)
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    \underline{id} & Nombre \\ \hline
+       &        \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent Proveedores(\underline{id}, nombre, plataforma)
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \underline{id} & Nombre & Plataforma \\ \hline
+       &        &            \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent Usuarios(\underline{id}, nombre, email, contraseña)
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    \underline{id} & Nombre & Email & Contraseña \\ \hline
+       &        &       &                 \\ \hline
+    \end{tabular}
+\end{table}
+\newpage
+\noindent Reseñas(\underline{id\_usuario}, \underline{id\_videojuego}, texto, veredicto)
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    \underline{id\_usuario} & \underline{id\_videojuego} & Texto & Veredicto \\ \hline
+       &        &       &                 \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent PropiedadVideojuegos(\underline{id\_videojuego}, \underline{id\_usuario}, \underline{id\_proveedor}, registro\_horas, preorden)
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    \underline{id\_videojuego} & \underline{id\_usuario} & \underline{id\_proveedor} & Registro de Horas & Preorden \\ \hline
+       &        &            &       &           \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent Suscripciones(\underline{id\_cuenta}, activo)
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \underline{id\_usuario} & \underline{id\_proveedor} & Activo \\ \hline
+       &        &            \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent MercadoVideojuegos(\underline{id\_videojuego}, \underline{id\_proveedor}, precio)
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|l|}
+    \hline
+    \underline{id\_videojuego} & \underline{id\_proveedor} & Precio \\ \hline
+       &        &            \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent GeneroAsignados(\underline{id\_videojuego}, \underline{id\_genero})
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    \underline{id\_videojuego} & \underline{id\_genero} \\ \hline
+       &        \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent SubGeneroAsignados(\underline{id\_videojuego}, \underline{id\_subgenero})
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    \underline{id\_videojuego} & \underline{id\_subgenero} \\ \hline
+       &        \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent GenerosYSubgeneros(\underline{id\_genero}, \underline{id\_subgenero})
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    \underline{id\_genero} & \underline{id\_subgenero} \\ \hline
+       &        \\ \hline
+    \end{tabular}
+\end{table}
+
+\noindent VideojuegosRecomendados(\underline{id\_videojuego}, cantidad\_recomendaciones)
+\begin{table}[ht!]
+    \centering
+    \begin{tabular}{|l|l|}
+    \hline
+    \underline{id\_videojuego} & Cantidad de Recomendaciones \\ \hline
+       &        \\ \hline
+    \end{tabular}
+\end{table}
+
+\newpage
+\section{Consultas en la base de datos}
+\subsection{Consultas en algebra relacional}
+\begin{enumerate}
+    \item
+    $\pi_{\text{videojuegos.titulo}, \text{proveedores.nombre}}$\\
+    $\left( \left( \text{videojuegos} \bowtie_{\text{videojuegos.id} = \text{mercado\_videojuegos.id\_videojuego}} \text{mercado\_videojuegos} \right) \right.$\\
+    $\left. \bowtie_{\text{proveedores.id} = \text{mercado\_videojuegos.id\_proveedor}} \text{proveedores} \right)$
+    \item $
+    \pi_{\text{titulo}} 
+    \left( 
+        \sigma_{\text{cantidad\_de\_recomendaciones} \geq 5} 
+        \left( 
+            \text{videojuegos} \bowtie_{\text{id} = \text{id\_videojuego}} \text{videojuegos\_recomendados} 
+        \right) 
+    \right)
+    $
+    \item $\pi_{titulos}
+    \left(
+        videojuegos \bowtie_{id\_videojuego=id\_videojuego} 
+        \left( 
+            genero\_asignado \bowtie_{id\_genero=id} 
+            \sigma_{nombre='fps'}(generos) 
+        \right) 
+    \right) 
+$\\$\bigcup \pi_{titulos}
+\left(
+    videojuegos \bowtie_{id\_videojuego=id\_videojuego} 
+    \left( 
+        subgenero\_asignado \bowtie_{id\_subgenero=id\_subgenero} 
+    \right)
+\right.$ \\ $
+\left.
+    \left( 
+        relacion\_subgenero \bowtie_{id\_genero=id} 
+        \sigma_{nombre='fps'}(generos) 
+    \right) 
+\right)
+$
+\end{enumerate}
+\subsection{Consultas en SQL}
+\begin{enumerate}
+    \item SELECT videojuegos.titulo, proveedores.nombre FROM videojuegos JOIN mercado\_videojuegos ON videojuegos.id = mercado\_videojuegos.id\_videojuego JOIN proveedores ON \mbox{proveedores.id} = mercado\_videojuegos.id\_proveedor
+    \item SELECT videojuegos.titulo FROM videojuegos JOIN videojuegos\_recomendados ON videojuegos.id = videojuegos\_recomendados.id\_videojuego WHERE \\videojuegos\_recomendados.cantidad\_de\_recomendaciones $>=$ 5;
+    \item SELECT videojuegos.titulo FROM videojuegos JOIN genero\_asignado ON videojuegos.id = genero\_asignado.id\_videojuego WHERE genero\_asignado.id\_genero = \mbox{(SELECT} id FROM generos WHERE nombre = 'fps') UNION SELECT videojuegos.titulo FROM videojuegos JOIN subgenero\_asignado ON videojuegos.id = subgenero\_asignado.id\_videojuego WHERE subgenero\_asignado.id\_subgenero IN (SELECT id\_subgenero FROM relacion\_subgenero WHERE id\_genero = (SELECT id FROM generos WHERE nombre = 'fps'));
+\end{enumerate}
+
+
+
+\end{document}
